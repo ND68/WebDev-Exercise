@@ -1,0 +1,25 @@
+{
+  "name": "fall24-dev-assessment",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:seed": "node scripts/seed.mjs"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.17.0",
+    "next": "14.2.5",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@types/node": "22.1.0",
+    "@types/react": "18.3.3",
+    "prisma": "^5.17.0",
+    "typescript": "5.5.4"
+  }
+}

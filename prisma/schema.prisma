@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./database.sqlite3"
+}
+
+model Capybara {
+  id           Int    @id @default(autoincrement())
+  name         String
+  age          Int
+  status       String
+  favoriteFood String
+}
+
+model Food {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  count Int
+}
