@@ -10,3 +10,15 @@ export function orderFoodFromBigFoodCompany(food, count) {
     }, 1000 + 2000 * Math.random());
   });
 }
+
+export function orderAlotFromBigFoodCompany() {
+  return new Promise<void>((resolve) => {
+    console.log(`Ordering alot of food`);
+
+    setTimeout(() => {
+      console.log("Done!");
+
+      resolve();
+    }, 1000 + 2000 * Math.random());
+  });
+}
