@@ -9,7 +9,7 @@ export default async function Supplies() {
 
   return (
     <main className="w-screen h-full">
-      <HeaderNav/>
+      <HeaderNav currentPage="supplies"/>
 
       <table id="foodTable">
         <thead>

@@ -17,7 +17,7 @@ export default async function Home() {
 
   return (
     <main className="w-screen h-full">
-      <HeaderNav/>
+      <HeaderNav currentPage="capybaras"/>
       <table>
         <thead>
           <tr>
