@@ -2,14 +2,14 @@ import { getAll } from "@/server/db/actions/food";
 import Link from "next/link";
 import Row from "./Row";
 import LowCountButton from "./LowCountButton"
+import HeaderNav from "../HeaderNav";
 
 export default async function Supplies() {
   const food = await getAll();
 
   return (
-    <main>
-      <h1>Supplies</h1>
-      <Link href="/">Back</Link>
+    <main className="w-screen h-full">
+      <HeaderNav/>
 
       <table id="foodTable">
         <thead>

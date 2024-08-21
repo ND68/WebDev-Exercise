@@ -1,5 +1,5 @@
 import { getAll } from "@/server/db/actions/capybara";
-import Link from "next/link";
+import HeaderNav from "./HeaderNav";
 
 function Row({ capybara }) {
   return (
@@ -16,10 +16,8 @@ export default async function Home() {
   const capybaras = await getAll();
 
   return (
-    <main>
-      <h1>Capybaras</h1>
-      <Link href="/">Back</Link>
-
+    <main className="w-screen h-full">
+      <HeaderNav/>
       <table>
         <thead>
           <tr>
