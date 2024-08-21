@@ -1,20 +1,40 @@
+import { getAll } from "@/server/db/actions/capybara";
 import Link from "next/link";
 
-import styles from "./page.module.css";
+function Row({ capybara }) {
+  return (
+    <tr>
+      <td>{capybara.name}</td>
+      <td>{capybara.age}</td>
+      <td>{capybara.status}</td>
+      <td>{capybara.favoriteFood}</td>
+    </tr>
+  );
+}
 
-import Image from "next/image";
+export default async function Home() {
+  const capybaras = await getAll();
 
-export default function Home() {
   return (
     <main>
-      <h1>Capybaras Among Us</h1>
+      <h1>Capybaras</h1>
+      <Link href="/">Back</Link>
 
-      <Image src="/capybara.jpg" alt="eepy capybara" width={400} height={150} />
-      <br />
-
-      <Link href="/capybaras">Capybaras</Link>
-      <br />
-      <Link href="/supplies">Supplies</Link>
+      <table>
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Age</td>
+            <td>Status</td>
+            <td>Favorite Food</td>
+          </tr>
+        </thead>
+        <tbody>
+          {capybaras.map((capybara) => (
+            <Row capybara={capybara} />
+          ))}
+        </tbody>
+      </table>
     </main>
   );
 }
