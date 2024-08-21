@@ -21,7 +21,6 @@ export default function LowCountButton() {
   const buttonText = loading ? "Ordering..." : "Order all foods in low quantity (<5)";
 
   return (
-    <button onClick={handleClickMassOrder}>{buttonText}</button>
-
+    <button className="border-2 rounded-xl border-black mt-[1%] p-[.5%] font-bold underline" onClick={handleClickMassOrder}>{buttonText}</button>
   );
 }

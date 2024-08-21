@@ -11,9 +11,9 @@ export default async function Supplies() {
     <main className="w-screen h-full">
       <HeaderNav currentPage="supplies"/>
 
-      <table id="foodTable">
+      <table  className="w-[65%]">
         <thead>
-          <tr>
+          <tr className="bg-slate-200 font-bold">
             <td>Name</td>
             <td>Count</td>
             <td>Actions</td>

@@ -18,21 +18,22 @@ export default async function Home() {
   return (
     <main className="w-screen h-full">
       <HeaderNav currentPage="capybaras"/>
-      <table>
+      <table className="w-[65%]">
         <thead>
-          <tr>
+          <tr className="bg-slate-200 font-bold">
             <td>Name</td>
             <td>Age</td>
             <td>Status</td>
             <td>Favorite Food</td>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="">
           {capybaras.map((capybara) => (
             <Row capybara={capybara} />
           ))}
         </tbody>
       </table>
+      <div className="h-[10%]"></div>
     </main>
   );
 }

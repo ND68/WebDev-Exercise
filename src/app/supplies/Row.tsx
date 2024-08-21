@@ -25,7 +25,7 @@ export default function Row({ food }) {
       <td>{food.name}</td>
       <td>{food.count}</td>
       <td>
-        <button onClick={handleClickOrderMore}>{buttonText}</button>
+        <button className="font-bold underline" onClick={handleClickOrderMore}>{buttonText}</button>
       </td>
     </tr>
   );

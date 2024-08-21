@@ -10,11 +10,11 @@ export default function HeaderNav(currentPage) {
     const page = currentPage.currentPage
 
     return (
-        <div className="h-[20%] w-screen flex flex-row items-center">
-            <Image className="m-6" src={appLogo} alt="Logo" width={100} height={100} />
+        <div className="h-[20%] w-full flex flex-row items-center">
+            <Image className="mr-6" src={appLogo} alt="Logo" width={100} height={100} />
             <div className="h-[75%] w-[50%] flex flex-col justify-around">
                 <div className="text-5xl font-thin">Capybaras Among Us</div>
-                <div className="flex w-[25%] justify-between">
+                <div className="flex w-[30%] justify-between text-lg">
                     <Link href="/">{page == "capybaras" ? 
                         <div className="font-bold">Capybaras</div> :
                         <div>Capybaras</div>
