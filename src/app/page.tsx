@@ -1,5 +1,9 @@
-import { getAll } from "@/server/db/actions/capybara";
+"use client";
+
+import { getAll, getSortedByAge, getSortedByName } from "@/server/db/actions/capybara";
 import HeaderNav from "./HeaderNav";
+import React, { useEffect } from "react";
+import { useState } from "react";
 
 function Row({ capybara }) {
   return (
@@ -12,13 +16,34 @@ function Row({ capybara }) {
   );
 }
 
-export default async function Home() {
-  const capybaras = await getAll();
+export default function Home() {
+  const [capybaras, setCapybaras] = useState(null);
+
+  async function fetchCapybaras() {
+    let data = await getAll();
+    setCapybaras(data);
+  }
+
+  async function sortByAge() {
+    let data = await getSortedByAge();
+    setCapybaras(data);
+  }
+
+  async function sortByName() {
+    let data = await getSortedByName();
+    setCapybaras(data);
+  }
+
+  useEffect(()=>{
+    fetchCapybaras();
+  }, [])
+
+  
 
   return (
     <main className="w-screen h-full">
       <HeaderNav currentPage="capybaras"/>
-      <table className="w-[65%]">
+      <table id="myTable" className="w-[65%]">
         <thead>
           <tr className="bg-slate-200 font-bold">
             <td>Name</td>
@@ -28,11 +53,16 @@ export default async function Home() {
           </tr>
         </thead>
         <tbody className="">
-          {capybaras.map((capybara) => (
+          {capybaras == null ? <tr></tr> : 
+            capybaras.map((capybara) => (
             <Row capybara={capybara} />
           ))}
         </tbody>
       </table>
+      <button onClick={sortByAge}>Sort By Age</button>
+      <button onClick={sortByName}>Sort By Name</button>
+      <button onClick={sortByAge}>Sort By Age</button>
+      <button onClick={sortByName}>Sort By Name</button>
       <div className="h-[10%]"></div>
     </main>
   );
