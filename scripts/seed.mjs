@@ -4,9 +4,14 @@ import { faker } from "@faker-js/faker";
 const prisma = new PrismaClient();
 
 const FOODS = ["🥦", "🍈", "🍠", "🥕", "🥬", "🌽"];
+const STATUS =  ["😃", "😐", "😢"];
 
 function randFood() {
   return FOODS[faker.number.int({ max: FOODS.length - 1 })];
+}
+
+function randStatus() {
+  return STATUS[faker.number.int({ max: STATUS.length - 1 })];
 }
 
 async function main() {
@@ -16,7 +21,7 @@ async function main() {
       data: {
         name: faker.person.firstName(),
         age: faker.number.int({ min: 1, max: 10 }),
-        status: "😃",
+        status: randStatus(),
         favoriteFood: randFood(),
       },
     });

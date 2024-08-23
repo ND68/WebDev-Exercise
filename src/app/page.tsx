@@ -22,7 +22,7 @@ export default function Home() {
   const [statusFilters, setStatusFilters] = useState(["😃", "😐", "😢"]);
   const [sortBy, setSortBy] = useState("name");
   const [currPage, setCurrPage] = useState(1);
-  const [entriesPerPage, setEntriesPerPage] = useState(5);
+  const [entriesPerPage, setEntriesPerPage] = useState(4);
   const [totalEntries, setTotalEntries] = useState(0);
 
   async function fetchCapybaras() {
@@ -108,7 +108,7 @@ export default function Home() {
                 <div className="font-extrabold text-xl m-[35%]">{currPage}</div>
                 <button onClick={(() => setCurrPage(currPage + 1))}>→</button> 
               </div> 
-                : currPage >= Math.ceil(totalEntries/entriesPerPage) ? 
+                : totalEntries < entriesPerPage ? 
               <div className="flex flex-row">
                 <button onClick={(() => setCurrPage(currPage - 1))}>←</button>
                 <div className="font-extrabold text-xl m-[35%]">{currPage}</div>
@@ -124,6 +124,7 @@ export default function Home() {
             <div className="flex">
               <div className="self-center">Entries Per Page:</div>
               <select onChange={(entries) =>setEntriesPerPage(parseInt(entries.target.value))}>
+                <option value="4">4</option>
                 <option value="5">5</option>
                 <option value="8">8</option>
                 <option value="10">10</option>
