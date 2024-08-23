@@ -19,7 +19,7 @@ function Row({ capybara }) {
 export default function Home() {
   const [capybaras, setCapybaras] = useState(null);
   const [foodFilters, setFoodFilters] = useState(["🥦", "🍈", "🍠", "🥕", "🥬", "🌽"]);
-  const [statusFilters, setStatusFilters] = useState(["😃"])
+  const [statusFilters, setStatusFilters] = useState(["😃", "😐", "😢"])
   const [sortBy, setSortBy] = useState("name")
 
 
@@ -51,6 +51,16 @@ export default function Home() {
     setFoodFilters(foodFilters.filter(food => food !== foodToRemove))
   }
 
+  function addStatus(statusToAdd) {
+    let newStatusFilters = [...statusFilters];
+    newStatusFilters.push(statusToAdd);
+    setStatusFilters(newStatusFilters);
+  }
+  
+  function removeStatus(statusToRemove) {
+    setStatusFilters(statusFilters.filter(status => status !== statusToRemove))
+  }
+
   return (
     <main className="w-full h-full">
       <HeaderNav currentPage="capybaras"/>
@@ -78,7 +88,7 @@ export default function Home() {
           <div className="flex justify-around">
             <button className="border-black border-2 rounded-lg p-[3%] flex justify-center" 
             style={{opacity: sortBy == 'name' ? '100%' : '30%'}} onClick={() => setSortBy("name")}>By Name</button>
-            
+
             <button className="border-black border-2 rounded-lg p-[3%] flex justify-center" 
             style={{opacity: sortBy == 'age' ? '100%' : '30%'}} onClick={() => setSortBy("age")}>By Age</button>
           </div>
@@ -117,6 +127,26 @@ export default function Home() {
             htmlFor="corn">🌽</label>
 
           </div>
+
+          <div className="flex justify-center">
+
+            <input type="checkbox" id="happy" className="appearance-none check-with-label" 
+            onClick={() => statusFilters.includes("😃") ? removeStatus("😃") : addStatus("😃")}></input>
+            <label className="border-black border-2 rounded-lg p-[3%] w-[15%] m-[2%] flex justify-center label-for-check" 
+            htmlFor="happy">😃</label>
+
+            <input type="checkbox" id="neutral" className="appearance-none check-with-label" 
+            onClick={() => statusFilters.includes("😐") ? removeStatus("😐") : addStatus("😐")}></input>
+            <label className="border-black border-2 rounded-lg p-[3%] w-[15%] m-[2%] flex justify-center label-for-check" 
+            htmlFor="neutral">😐</label>
+
+            <input type="checkbox" id="sad" className="appearance-none check-with-label" 
+            onClick={() => statusFilters.includes("😢") ? removeStatus("😢") : addStatus("😢")}></input>
+            <label className="border-black border-2 rounded-lg p-[3%] w-[15%] m-[2%] flex justify-center label-for-check" 
+            htmlFor="sad">😢</label>
+
+          </div>
+
         </div>
       </div>
       <div className="h-[10%]"></div>
