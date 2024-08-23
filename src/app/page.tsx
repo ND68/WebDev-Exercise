@@ -19,7 +19,7 @@ function Row({ capybara }) {
 export default function Home() {
   const [capybaras, setCapybaras] = useState(null);
   const [foodFilters, setFoodFilters] = useState(["🥦", "🍈", "🍠", "🥕", "🥬", "🌽"]);
-  const [statusFilters, setStatusFilters] = useState([])
+  const [statusFilters, setStatusFilters] = useState(["😃"])
   const [sortBy, setSortBy] = useState("name")
 
 
@@ -28,8 +28,8 @@ export default function Home() {
     setCapybaras(data);
   }
 
-  async function sortByAge(foodFilters, statusFilters) {
-    let data = await getSortedFilter( sortBy, foodFilters, statusFilters);
+  async function updateCapybaras(sortBy, foodFilters, statusFilters) {
+    let data = await getSortedFilter(sortBy, foodFilters, statusFilters);
     setCapybaras(data);
   }
 
@@ -38,8 +38,8 @@ export default function Home() {
   }, [])
 
   useEffect(()=>{
-    console.log(foodFilters);
-  }, [foodFilters])
+    updateCapybaras(sortBy, foodFilters, statusFilters);
+  }, [sortBy, foodFilters, statusFilters])
 
   function addFood(foodToAdd) {
     let newFoodFilters = [...foodFilters];
@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <main className="w-full h-full">
       <HeaderNav currentPage="capybaras"/>
-      <div className="flex justify-between">
+      <div className="h-full flex justify-between">
         <table id="myTable" className="w-[65%]">
           <thead>
             <tr className="bg-slate-200 font-bold">
@@ -72,10 +72,13 @@ export default function Home() {
           </tbody>
         </table>
         
-        <div className="w-[25%] border-black border-2 rounded-[30px] flex flex-col p-[2%]">
-         <button onClick={() => sortByAge(foodFilters, statusFilters)}>Sort By Age</button>
-         <button className="border-2 border-black rounded-xl" style={{backgroundColor: foodFilters.includes("🥦") ? 'green' : 'red'}} 
-         onClick={() => foodFilters.includes("🥦") ? removeFood("🥦") : addFood("🥦")}>🥦</button>
+        <div className="w-[25%] h-[50%] border-black border-2 rounded-[30px] flex flex-col p-[2%]">
+          <button onClick={() => setSortBy("age")}>Sort By Age</button>
+          <button onClick={() => setSortBy("name")}>Sort By Name</button>
+        
+          <input type="checkbox" id="brocolli" className="appearance-none check-with-label" 
+          onClick={() => foodFilters.includes("🥦") ? removeFood("🥦") : addFood("🥦")}></input>
+          <label className="border-black border-2 rounded-lg p-[3%] w-[15%] flex justify-center label-for-check" htmlFor="brocolli">🥦</label>
         </div>
       </div>
       <div className="h-[10%]"></div>

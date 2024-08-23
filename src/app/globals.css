@@ -26,3 +26,8 @@ th, td {
   text-align: center;
   padding: 2%;
 }
+
+.check-with-label:checked + .label-for-check {
+  opacity: 50%;
+  border-color: gray;
+}
