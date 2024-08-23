@@ -29,5 +29,5 @@ th, td {
 
 .check-with-label:checked + .label-for-check {
   opacity: 50%;
-  border-color: gray;
+  border-style: dashed;
 }

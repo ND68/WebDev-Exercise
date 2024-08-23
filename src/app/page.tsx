@@ -55,7 +55,7 @@ export default function Home() {
     <main className="w-full h-full">
       <HeaderNav currentPage="capybaras"/>
       <div className="h-full flex justify-between">
-        <table id="myTable" className="w-[65%]">
+        <table className="w-[65%]">
           <thead>
             <tr className="bg-slate-200 font-bold">
               <td>Name</td>
@@ -72,13 +72,51 @@ export default function Home() {
           </tbody>
         </table>
         
-        <div className="w-[25%] h-[50%] border-black border-2 rounded-[30px] flex flex-col p-[2%]">
-          <button onClick={() => setSortBy("age")}>Sort By Age</button>
-          <button onClick={() => setSortBy("name")}>Sort By Name</button>
+        <div className="w-[25%] h-[50%] border-black border-2 rounded-[30px] flex flex-col p-[2%] justify-around">
+          <div className="text-2xl self-center font-extralight">Sort</div>
+
+          <div className="flex justify-around">
+            <button className="border-black border-2 rounded-lg p-[3%] flex justify-center" 
+            style={{opacity: sortBy == 'name' ? '100%' : '30%'}} onClick={() => setSortBy("name")}>By Name</button>
+            
+            <button className="border-black border-2 rounded-lg p-[3%] flex justify-center" 
+            style={{opacity: sortBy == 'age' ? '100%' : '30%'}} onClick={() => setSortBy("age")}>By Age</button>
+          </div>
         
-          <input type="checkbox" id="brocolli" className="appearance-none check-with-label" 
-          onClick={() => foodFilters.includes("🥦") ? removeFood("🥦") : addFood("🥦")}></input>
-          <label className="border-black border-2 rounded-lg p-[3%] w-[15%] flex justify-center label-for-check" htmlFor="brocolli">🥦</label>
+          <div className="text-2xl self-center font-extralight">Filter</div>
+          <div className="flex justify-between">
+
+            <input type="checkbox" id="brocolli" className="appearance-none check-with-label" 
+            onClick={() => foodFilters.includes("🥦") ? removeFood("🥦") : addFood("🥦")}></input>
+            <label className="border-black border-2 rounded-lg p-[3%] w-[15%] flex justify-center label-for-check" 
+            htmlFor="brocolli">🥦</label>
+
+            <input type="checkbox" id="melon" className="appearance-none check-with-label" 
+            onClick={() => foodFilters.includes("🍈") ? removeFood("🍈") : addFood("🍈")}></input>
+            <label className="border-black border-2 rounded-lg p-[3%] w-[15%] flex justify-center label-for-check" 
+            htmlFor="melon">🍈</label>
+        
+            <input type="checkbox" id="yam" className="appearance-none check-with-label" 
+            onClick={() => foodFilters.includes("🍠") ? removeFood("🍠") : addFood("🍠")}></input>
+            <label className="border-black border-2 rounded-lg p-[3%] w-[15%] flex justify-center label-for-check" 
+            htmlFor="yam">🍠</label>
+
+            <input type="checkbox" id="carrot" className="appearance-none check-with-label" 
+            onClick={() => foodFilters.includes("🥕") ? removeFood("🥕") : addFood("🥕")}></input>
+            <label className="border-black border-2 rounded-lg p-[3%] w-[15%] flex justify-center label-for-check" 
+            htmlFor="carrot">🥕</label>
+
+            <input type="checkbox" id="lettuce" className="appearance-none check-with-label" 
+            onClick={() => foodFilters.includes("🥬") ? removeFood("🥬") : addFood("🥬")}></input>
+            <label className="border-black border-2 rounded-lg p-[3%] w-[15%] flex justify-center label-for-check" 
+            htmlFor="lettuce">🥬</label>
+
+            <input type="checkbox" id="corn" className="appearance-none check-with-label" 
+            onClick={() => foodFilters.includes("🌽") ? removeFood("🌽") : addFood("🌽")}></input>
+            <label className="border-black border-2 rounded-lg p-[3%] w-[15%] flex justify-center label-for-check" 
+            htmlFor="corn">🌽</label>
+
+          </div>
         </div>
       </div>
       <div className="h-[10%]"></div>
