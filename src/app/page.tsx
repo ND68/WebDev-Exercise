@@ -19,18 +19,24 @@ function Row({ capybara }) {
 export default function Home() {
   const [capybaras, setCapybaras] = useState(null);
   const [foodFilters, setFoodFilters] = useState(["🥦", "🍈", "🍠", "🥕", "🥬", "🌽"]);
-  const [statusFilters, setStatusFilters] = useState(["😃", "😐", "😢"])
-  const [sortBy, setSortBy] = useState("name")
-
+  const [statusFilters, setStatusFilters] = useState(["😃", "😐", "😢"]);
+  const [sortBy, setSortBy] = useState("name");
+  const [currPage, setCurrPage] = useState(1);
+  const [entriesPerPage, setEntriesPerPage] = useState(5);
+  const [totalEntries, setTotalEntries] = useState(0);
 
   async function fetchCapybaras() {
     let data = await getAll();
     setCapybaras(data);
+    setTotalEntries(data.length)
   }
 
-  async function updateCapybaras(sortBy, foodFilters, statusFilters) {
-    let data = await getSortedFilter(sortBy, foodFilters, statusFilters);
+  async function updateCapybaras() {
+    let data = await getSortedFilter(sortBy, foodFilters, statusFilters, 
+        entriesPerPage * (currPage - 1), entriesPerPage
+    );
     setCapybaras(data);
+    setTotalEntries(data.length)
   }
 
   useEffect(()=>{
@@ -38,8 +44,15 @@ export default function Home() {
   }, [])
 
   useEffect(()=>{
-    updateCapybaras(sortBy, foodFilters, statusFilters);
-  }, [sortBy, foodFilters, statusFilters])
+    setCurrPage(1);
+    updateCapybaras();
+  }, [sortBy, foodFilters, statusFilters, entriesPerPage])
+
+  useEffect(()=>{
+    updateCapybaras();
+  }, [sortBy, foodFilters, currPage, statusFilters, entriesPerPage])
+
+  
 
   function addFood(foodToAdd) {
     let newFoodFilters = [...foodFilters];
@@ -64,24 +77,25 @@ export default function Home() {
   return (
     <main className="w-full h-full">
       <HeaderNav currentPage="capybaras"/>
-      <div className="h-full flex justify-between">
-        <table className="w-[65%]">
-          <thead>
-            <tr className="bg-slate-200 font-bold">
-              <td>Name</td>
-              <td>Age</td>
-              <td>Status</td>
-              <td>Favorite Food</td>
-            </tr>
-          </thead>
-          <tbody>
-            {capybaras == null ? <tr></tr> : 
-              capybaras.map((capybara) => (
-              <Row capybara={capybara} />
-            ))}
-          </tbody>
-        </table>
-        
+      <div className="flex justify-between bg-green-200">
+        <div className="w-[65%] bg-yellow-300">
+          <table className="w-[100%]">
+            <thead>
+              <tr className="bg-slate-200 font-bold">
+                <td>Name</td>
+                <td>Age</td>
+                <td>Status</td>
+                <td>Favorite Food</td>
+              </tr>
+            </thead>
+            <tbody>
+              {capybaras == null ? <tr></tr> : 
+                capybaras.map((capybara) => (
+                <Row capybara={capybara} />
+              ))}
+            </tbody>
+          </table>
+        </div>
         <div className="w-[25%] h-[50%] border-black border-2 rounded-[30px] flex flex-col p-[2%] justify-around">
           <div className="text-2xl self-center font-extralight">Sort</div>
 
@@ -149,6 +163,40 @@ export default function Home() {
 
         </div>
       </div>
+
+      <div>
+        <select onChange={(entries) =>setEntriesPerPage(parseInt(entries.target.value))}>
+          <option value="5">5</option>
+          <option value="8">8</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+        <div>
+        {totalEntries < entriesPerPage && totalEntries !== 0 ? 
+        <div className="font-extrabold text-xl">{currPage}</div> :
+        currPage <= 1 ? 
+        <div>
+          <button disabled={true} className="opacity-0" onClick={(() => setCurrPage(currPage - 1))}>←</button>
+          <div className="font-extrabold text-xl">{currPage}</div>
+          <button onClick={(() => setCurrPage(currPage + 1))}>→</button> 
+        </div> 
+          : currPage >= Math.ceil(totalEntries/entriesPerPage) ? 
+        <div>
+          <button onClick={(() => setCurrPage(currPage - 1))}>←</button>
+          <div className="font-extrabold text-xl">{currPage}</div>
+          <button disabled={true} className="opacity-0" onClick={(() => setCurrPage(currPage + 1))}>→</button>
+        </div> :
+        <div>
+          <button onClick={(() => setCurrPage(currPage - 1))}>←</button>
+          <div className="font-extrabold text-xl">{currPage}</div>
+          <button onClick={(() => setCurrPage(currPage + 1))}>→</button>
+        </div>
+        }
+
+        </div>
+      </div>
+
       <div className="h-[10%]"></div>
     </main>
   );
