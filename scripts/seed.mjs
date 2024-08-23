@@ -11,7 +11,7 @@ function randFood() {
 
 async function main() {
   await prisma.capybara.deleteMany();
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 16; i++) {
     await prisma.capybara.create({
       data: {
         name: faker.person.firstName(),
