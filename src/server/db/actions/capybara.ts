@@ -6,44 +6,12 @@ export async function getAll() {
   return await prisma.capybara.findMany();
 }
 
-export async function getSortedByAge() {
+export async function getSortedFilter(sortBy, food, currStatus) {
   return await prisma.capybara.findMany({
-    orderBy: [
-      {
-        age: 'asc',
-      }
-    ]
-  })
-}
-
-export async function getSortedByName() {
-  return await prisma.capybara.findMany({
-    orderBy: [
-      {
-        name: 'asc',
-      }
-    ]
-  })
-}
-
-export async function getFilterByFood() {
-  return await prisma.capybara.findMany({
+    orderBy: { [sortBy]: "asc", },
     where: {
-      email: {
-        endsWith: 'prisma.io',
-      },
-      posts: {
-        some: {
-          published: true,
-        },
-      },
-    },
-    include: {
-      posts: {
-        where: {
-          published: true,
-        },
-      },
-    },
+      favoriteFood: { in: food },
+      status: { in: currStatus }
+    }
   })
 }

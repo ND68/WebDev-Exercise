@@ -1,6 +1,6 @@
 "use client";
 
-import { getAll, getSortedByAge, getSortedByName } from "@/server/db/actions/capybara";
+import { getAll, getSortedFilter } from "@/server/db/actions/capybara";
 import HeaderNav from "./HeaderNav";
 import React, { useEffect } from "react";
 import { useState } from "react";
@@ -18,19 +18,18 @@ function Row({ capybara }) {
 
 export default function Home() {
   const [capybaras, setCapybaras] = useState(null);
+  const [foodFilters, setFoodFilters] = useState(["🥦", "🍈", "🍠", "🥕", "🥬", "🌽"]);
+  const [statusFilters, setStatusFilters] = useState([])
+  const [sortBy, setSortBy] = useState("name")
+
 
   async function fetchCapybaras() {
     let data = await getAll();
     setCapybaras(data);
   }
 
-  async function sortByAge() {
-    let data = await getSortedByAge();
-    setCapybaras(data);
-  }
-
-  async function sortByName() {
-    let data = await getSortedByName();
+  async function sortByAge(foodFilters, statusFilters) {
+    let data = await getSortedFilter( sortBy, foodFilters, statusFilters);
     setCapybaras(data);
   }
 
@@ -38,31 +37,47 @@ export default function Home() {
     fetchCapybaras();
   }, [])
 
+  useEffect(()=>{
+    console.log(foodFilters);
+  }, [foodFilters])
+
+  function addFood(foodToAdd) {
+    let newFoodFilters = [...foodFilters];
+    newFoodFilters.push(foodToAdd);
+    setFoodFilters(newFoodFilters);
+  }
   
+  function removeFood(foodToRemove) {
+    setFoodFilters(foodFilters.filter(food => food !== foodToRemove))
+  }
 
   return (
-    <main className="w-screen h-full">
+    <main className="w-full h-full">
       <HeaderNav currentPage="capybaras"/>
-      <table id="myTable" className="w-[65%]">
-        <thead>
-          <tr className="bg-slate-200 font-bold">
-            <td>Name</td>
-            <td>Age</td>
-            <td>Status</td>
-            <td>Favorite Food</td>
-          </tr>
-        </thead>
-        <tbody className="">
-          {capybaras == null ? <tr></tr> : 
-            capybaras.map((capybara) => (
-            <Row capybara={capybara} />
-          ))}
-        </tbody>
-      </table>
-      <button onClick={sortByAge}>Sort By Age</button>
-      <button onClick={sortByName}>Sort By Name</button>
-      <button onClick={sortByAge}>Sort By Age</button>
-      <button onClick={sortByName}>Sort By Name</button>
+      <div className="flex justify-between">
+        <table id="myTable" className="w-[65%]">
+          <thead>
+            <tr className="bg-slate-200 font-bold">
+              <td>Name</td>
+              <td>Age</td>
+              <td>Status</td>
+              <td>Favorite Food</td>
+            </tr>
+          </thead>
+          <tbody>
+            {capybaras == null ? <tr></tr> : 
+              capybaras.map((capybara) => (
+              <Row capybara={capybara} />
+            ))}
+          </tbody>
+        </table>
+        
+        <div className="w-[25%] border-black border-2 rounded-[30px] flex flex-col p-[2%]">
+         <button onClick={() => sortByAge(foodFilters, statusFilters)}>Sort By Age</button>
+         <button className="border-2 border-black rounded-xl" style={{backgroundColor: foodFilters.includes("🥦") ? 'green' : 'red'}} 
+         onClick={() => foodFilters.includes("🥦") ? removeFood("🥦") : addFood("🥦")}>🥦</button>
+        </div>
+      </div>
       <div className="h-[10%]"></div>
     </main>
   );
